@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules # do not copy node moduels from working directory
+      - .:/app # Copy all of the contents of the current working directory.
+  tests:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules # do not copy node moduels from working directory
+      - .:/app # Copy all of the contents of the current working directory.
+    command: ["npm", "run", "test"]
