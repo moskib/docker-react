@@ -1,6 +1,18 @@
 version: 2.1
-
+orbs:
+  node: circleci/node@5.0.2
 jobs:
-  build:
+  build-and-test:
     docker:
-      - image: moskib/docker-react:0.0.1
+      - image: "cimg/base:stable"
+    steps:
+      - checkout
+      - node/install:
+          node-version: "16.15.0"
+      - node/install-packages
+      - run:
+          command: npm run test
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test
